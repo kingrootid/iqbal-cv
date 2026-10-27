@@ -1,0 +1,138 @@
+--- a/src/components/portfolio.tsx
++++ b/src/components/portfolio.tsx
+@@ -30,12 +30,47 @@
+   return <svg aria-hidden="true" className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{icon}</svg>;
+ }
+ 
++type FeaturedProject = {
++  id: string;
++  name: string;
++  href: string;
++  category: Record<Language, string>;
++  description: Record<Language, string>;
++  research: Record<Language, string>;
++  highlights: Record<Language, string[]>;
++};
++
++// Portfolio projects are kept here so this file can be used without changing resume.ts.
++const featuredProjects: FeaturedProject[] = [
++  {
++    id: "receive-divine-forgiveness",
++    name: "RECEIVE Divine Forgiveness",
++    href: "https://receive.divineforgiveness.org/",
++    category: {
++      en: "Research questionnaire platform",
++      id: "Platform kuesioner penelitian",
++    },
++    description: {
++      en: "A bilingual English–Indonesian platform supporting research on divine forgiveness, featuring online questionnaires and a guided interactive workbook.",
++      id: "Platform dwibahasa Inggris–Indonesia untuk mendukung penelitian tentang pengampunan ilahi, dilengkapi kuesioner online dan buku kerja interaktif terpandu.",
++    },
++    research: {
++      en: "The project's research team includes scholars affiliated with Harvard University, Gordon College, and Universitas Gunadarma.",
++      id: "Tim penelitian proyek ini mencakup akademisi yang berafiliasi dengan Harvard University, Gordon College, dan Universitas Gunadarma.",
++    },
++    highlights: {
++      en: ["English & Indonesian", "Online questionnaires", "Interactive workbook"],
++      id: ["Bahasa Inggris & Indonesia", "Kuesioner online", "Buku kerja interaktif"],
++    },
++  },
++];
++
+ type SkillCategory = keyof typeof skills;
+ type SkillFilter = SkillCategory | "all";
+ 
+ const labels = {
+   en: {
+-    home: "Home", about: "About", experience: "Experience", expertise: "Expertise", education: "Education", contact: "Contact",
++    home: "Home", about: "About", experience: "Experience", projects: "Projects", expertise: "Expertise", education: "Education", contact: "Contact",
+     heroIntro: "HELLO, I'M", heroSubtitle: "Software Engineer & Fullstack Developer",
+     heroText: "Building thoughtful digital products — from intuitive interfaces to APIs and microservices that keep things running.",
+     seeWork: "Explore my work", resume: "Download CV", heroAside: "FULLSTACK ENGINEERING · TEAM LEADERSHIP",
+@@ -45,18 +80,18 @@
+     aboutPara2: "My journey spans product development, banking regulatory systems, API and microservice operations, and leading small engineering teams. I value practical solutions, clear collaboration, and software people can rely on.",
+     aboutCallout: "WHAT I BRING TO THE TABLE", aboutHighlights: ["Fullstack product development", "API & microservices", "Technical leadership"],
+     workIndex: "02 / EXPERIENCE", workTitle: "The journey so far.", workSubtitle: "A timeline of the teams, products, and systems I've worked on.",
+-    current: "CURRENT", placement: "PLACEMENT AT", skillsIndex: "03 / TECH STACK", skillsTitle: "Tools of the trade.",
++    current: "CURRENT", placement: "PLACEMENT AT", projectIndex: "03 / FEATURED PROJECT", projectTitle: "Selected project.", projectSubtitle: "A research-focused experience built for participants and researchers.", projectResearch: "RESEARCH TEAM", projectVisit: "Visit website", skillsIndex: "04 / TECH STACK", skillsTitle: "Tools of the trade.",
+     skillsSubtitle: "Technologies listed in my CV, organized by area of work — not a proficiency ranking.",
+     all: "All skills", frontend: "Frontend", backend: "Backend", apiData: "API & Data", platform: "Platform & Tools",
+-    eduIndex: "04 / EDUCATION", eduTitle: "Always learning.", eduDescription: "A foundation in telecommunications, extended through real-world software engineering experience.",
++    eduIndex: "05 / EDUCATION", eduTitle: "Always learning.", eduDescription: "A foundation in telecommunications, extended through real-world software engineering experience.",
+     degree: "DEGREE", institution: "INSTITUTION", gpa: "GPA", strengthLabel: "BEYOND THE CODE", softTitle: "People & process",
+-    contactIndex: "05 / LET'S CONNECT", contactTitle1: "Have something", contactTitle2: "in mind?", contactSubtitle: "I'd love to hear about interesting engineering problems, collaborations, or opportunities.",
++    contactIndex: "06 / LET'S CONNECT", contactTitle1: "Have something", contactTitle2: "in mind?", contactSubtitle: "I'd love to hear about interesting engineering problems, collaborations, or opportunities.",
+     email: "Send an email", copy: "Copy email", copied: "Copied!", copyError: "Copy unavailable — use the email link", github: "Find me on GitHub", footer: "Built with Next.js & attention to detail.",
+     availability: "SOFTWARE ENGINEERING PORTFOLIO", graphicTitle: "Engineering across the stack", graphicCaption: "FRONTEND / BACKEND / MICROSERVICES",
+     graphBadge: "CURRENT FOCUS", graphFocus: "Banking applications & analytics", skip: "Skip to content",
+   },
+   id: {
+-    home: "Beranda", about: "Tentang", experience: "Pengalaman", expertise: "Keahlian", education: "Pendidikan", contact: "Kontak",
++    home: "Beranda", about: "Tentang", experience: "Pengalaman", projects: "Proyek", expertise: "Keahlian", education: "Pendidikan", contact: "Kontak",
+     heroIntro: "HALO, SAYA", heroSubtitle: "Software Engineer & Fullstack Developer",
+     heroText: "Membangun produk digital yang tepat guna — mulai dari antarmuka intuitif hingga API dan microservices yang andal.",
+     seeWork: "Lihat pengalaman", resume: "Unduh CV", heroAside: "FULLSTACK ENGINEERING · KEPEMIMPINAN TIM",
+@@ -66,12 +101,12 @@
+     aboutPara2: "Perjalanan karier saya mencakup pengembangan produk, sistem pelaporan regulator perbankan, operasional API dan microservices, hingga memimpin tim engineering kecil. Saya mengutamakan solusi praktis, kolaborasi, dan sistem yang dapat diandalkan.",
+     aboutCallout: "YANG SAYA KERJAKAN", aboutHighlights: ["Pengembangan produk fullstack", "API & microservices", "Kepemimpinan teknis"],
+     workIndex: "02 / PENGALAMAN", workTitle: "Perjalanan karier.", workSubtitle: "Tim, produk, dan sistem yang pernah saya tangani.",
+-    current: "SAAT INI", placement: "PENEMPATAN DI", skillsIndex: "03 / TEKNOLOGI", skillsTitle: "Tech stack saya.",
++    current: "SAAT INI", placement: "PENEMPATAN DI", projectIndex: "03 / PROYEK PILIHAN", projectTitle: "Proyek pilihan.", projectSubtitle: "Platform digital penelitian untuk peserta dan peneliti.", projectResearch: "TIM PENELITIAN", projectVisit: "Lihat website", skillsIndex: "04 / TEKNOLOGI", skillsTitle: "Tech stack saya.",
+     skillsSubtitle: "Teknologi yang tercantum di CV, dikelompokkan berdasarkan bidang — bukan peringkat penguasaan.",
+     all: "Semua", frontend: "Frontend", backend: "Backend", apiData: "API & Data", platform: "Platform & Tools",
+-    eduIndex: "04 / PENDIDIKAN", eduTitle: "Terus belajar.", eduDescription: "Berawal dari bidang telekomunikasi, lalu berkembang melalui pengalaman langsung di software engineering.",
++    eduIndex: "05 / PENDIDIKAN", eduTitle: "Terus belajar.", eduDescription: "Berawal dari bidang telekomunikasi, lalu berkembang melalui pengalaman langsung di software engineering.",
+     degree: "PROGRAM STUDI", institution: "INSTITUSI", gpa: "IPK", strengthLabel: "DI LUAR KODE", softTitle: "Tim & proses",
+-    contactIndex: "05 / MARI TERHUBUNG", contactTitle1: "Punya ide", contactTitle2: "menarik?", contactSubtitle: "Saya terbuka untuk berdiskusi tentang tantangan engineering, kolaborasi, dan peluang profesional.",
++    contactIndex: "06 / MARI TERHUBUNG", contactTitle1: "Punya ide", contactTitle2: "menarik?", contactSubtitle: "Saya terbuka untuk berdiskusi tentang tantangan engineering, kolaborasi, dan peluang profesional.",
+     email: "Kirim email", copy: "Salin email", copied: "Tersalin!", copyError: "Tidak bisa menyalin — gunakan tautan email", github: "Lihat GitHub", footer: "Dibangun dengan Next.js dan perhatian pada detail.",
+     availability: "PORTFOLIO SOFTWARE ENGINEER", graphicTitle: "Engineering di berbagai layer", graphicCaption: "FRONTEND / BACKEND / MICROSERVICES",
+     graphBadge: "FOKUS SAAT INI", graphFocus: "Aplikasi perbankan & analitik", skip: "Lewati ke konten",
+@@ -138,6 +173,7 @@
+   const navLinks = [
+     { id: "about", text: t.about },
+     { id: "experience", text: t.experience },
++    { id: "projects", text: t.projects },
+     { id: "skills", text: t.expertise },
+     { id: "education", text: t.education },
+   ];
+@@ -266,6 +302,39 @@
+           </div>
+         </section>
+ 
++        <section id="projects" className="section-pad container" aria-labelledby="projects-title">
++          <div className="section-intro reveal">
++            <div>
++              <div className="section-label"><span className="label-asterisk">✳</span> {t.projectIndex}</div>
++              <h2 id="projects-title" className="section-title">{t.projectTitle}</h2>
++            </div>
++            <p>{t.projectSubtitle}</p>
++          </div>
++          {featuredProjects.map((project) => (
++            <article className="work-body reveal" key={project.id}>
++              <div className="work-heading" style={{ flexWrap: "wrap" }}>
++                <div style={{ flex: "1 1 300px" }}>
++                  <div className="work-company">{project.category[lang]}</div>
++                  <h3>{project.name}</h3>
++                </div>
++                <a className="btn btn-outline" href={project.href} target="_blank" rel="noopener noreferrer"
++                  aria-label={`${t.projectVisit}: ${project.name}`}>
++                  {t.projectVisit}<Icon name="external" size={17}/>
++                </a>
++              </div>
++              <p className="edu-intro" style={{ maxWidth: "760px", marginTop: "18px" }}>{project.description[lang]}</p>
++              <div className="people-tags" style={{ marginTop: "24px" }}>
++                {project.highlights[lang].map((highlight) => (
++                  <span key={highlight}><Icon name="check" size={15}/>{highlight}</span>
++                ))}
++              </div>
++              <div className="placement-line" style={{ marginTop: "26px" }}>
++                {t.projectResearch} <strong>{project.research[lang]}</strong>
++              </div>
++            </article>
++          ))}
++        </section>
++
+         <section id="skills" className="section-pad container skill-section">
+           <div className="section-intro reveal"><div><div className="section-label"><span className="label-asterisk">✳</span> {t.skillsIndex}</div><h2 className="section-title">{t.skillsTitle}</h2></div><p>{t.skillsSubtitle}</p></div>
+           <div className="filter-tabs reveal" role="group" aria-label="Filter skills">
